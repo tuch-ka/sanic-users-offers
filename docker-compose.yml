@@ -13,7 +13,7 @@ services:
       - net
       
   sanic_users:
-     image: tuchka1986/sanic_user
+     image: tuchka1986/sanic-users
      ports:
      - "8001:8001"
      environment:
