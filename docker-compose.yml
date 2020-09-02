@@ -12,7 +12,7 @@ services:
     networks:
       - net
       
-  sanic_users:
+  sanic-users:
      image: tuchka1986/sanic-users
      ports:
      - "8001:8001"
@@ -29,6 +29,7 @@ services:
        python run.py
      depends_on:
        - db
+     restart: always
        
   sanic-offers:
      image: tuchka1986/sanic-offers
@@ -46,7 +47,9 @@ services:
      command:
        python run.py
      depends_on:
-       - sanic_users
+       - db
+       - sanic-users
+     restart: always
        
 networks:
   net:
