@@ -9,3 +9,45 @@ services:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
       POSTGRES_DB: user_offers
+    networks:
+      - net
+      
+  sanic_users:
+     image: tuchka1986/sanic_user
+     ports:
+     - "8001:8001"
+     environment:
+       DB_HOST: db
+       DB_DATABASE: user_offers
+       DB_PORT: 5432
+       DB_USER: username
+       DB_PASSWORD: password
+       TOKEN_KEY: ldngffgjkdfdkldjkfdjk
+     networks:
+       - net
+     command:
+       python run.py
+     depends_on:
+       - db
+       
+  sanic-offers:
+     image: tuchka1986/sanic-offers
+     ports:
+     - "8002:8002"
+     environment:
+       DB_HOST: db
+       DB_DATABASE: user_offers
+       DB_PORT: 5432
+       DB_USER: username
+       DB_PASSWORD: password
+       TOKEN_KEY: ldngffgjkdfdkldjkfdjk
+     networks:
+       - net
+     command:
+       python run.py
+     depends_on:
+       - sanic_users
+       
+networks:
+  net:
+     driver: bridge
